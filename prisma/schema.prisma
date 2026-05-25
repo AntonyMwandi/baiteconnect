@@ -12,10 +12,29 @@ generator client {
   previewFeatures = ["postgresqlExtensions"]
 }
 
-enum UserRole { CITIZEN MCA COUNTY_ADMIN GOVERNOR_EXEC }
-enum ModerationStatus { PENDING APPROVED UNDER_REVIEW SHADOW_BANNED }
-enum ProjectStage { ALLOCATED TENDERED ONGOING COMPLETED }
-enum ReportStatus { UNDER_REVIEW MYS_DISPATCHED RESOLVED }
+enum UserRole { 
+  CITIZEN 
+  MCA 
+  COUNTY_ADMIN 
+  GOVERNOR_EXEC 
+}
+enum ModerationStatus { 
+  PENDING 
+  APPROVED 
+  UNDER_REVIEW 
+  SHADOW_BANNED 
+}
+enum ProjectStage { 
+  ALLOCATED 
+  TENDERED 
+  ONGOING 
+  COMPLETED 
+}
+enum ReportStatus { 
+  UNDER_REVIEW 
+  MYS_DISPATCHED 
+  RESOLVED 
+}
 
 model User {
   id              String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid

@@ -1,5 +1,11 @@
 import { PrismaClient, ProjectStage } from '@prisma/client'
-const prisma = new PrismaClient()
+const prisma = new PrismaClient({
+  datasources: {
+    db: {
+      url: process.env.DIRECT_URL,
+    },
+  },
+})
 const MERU_WARDS = [
   { wardName: 'Antuambui', subCounty: 'Igembe North' }, { wardName: 'Ntunene', subCounty: 'Igembe North' },
   { wardName: 'Antubetwe Boreine', subCounty: 'Igembe North' }, { wardName: 'Muungaa', subCounty: 'Igembe North' },
