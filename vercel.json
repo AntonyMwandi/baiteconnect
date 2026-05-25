@@ -1,0 +1,35 @@
+{
+  "buildCommand": "npx prisma generate && next build",
+  "installCommand": "npm install",
+  "framework": "nextjs",
+  "regions": ["fra1"],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Frame-Options",        "value": "DENY" },
+        { "key": "X-Content-Type-Options",  "value": "nosniff" },
+        { "key": "X-XSS-Protection",        "value": "1; mode=block" },
+        { "key": "Referrer-Policy",          "value": "strict-origin-when-cross-origin" },
+        { "key": "Permissions-Policy",       "value": "camera=(self), geolocation=(self), microphone=()" }
+      ]
+    },
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        { "key": "Access-Control-Allow-Origin",  "value": "https://baiteconnect.meru.go.ke" },
+        { "key": "Access-Control-Allow-Methods", "value": "GET,POST,PUT,PATCH,DELETE,OPTIONS" },
+        { "key": "Access-Control-Allow-Headers", "value": "Content-Type, Authorization" }
+      ]
+    }
+  ],
+  "rewrites": [
+    { "source": "/api/ussd", "destination": "/api/ussd" }
+  ],
+  "crons": [
+    {
+      "path": "/api/health",
+      "schedule": "*/5 * * * *"
+    }
+  ]
+}

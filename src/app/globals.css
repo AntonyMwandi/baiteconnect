@@ -1,0 +1,86 @@
+/* src/app/globals.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Base ─────────────────────────────────────────────────── */
+@layer base {
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    @apply font-body text-neutralDark;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3 { @apply tracking-tight; }
+
+  :focus-visible {
+    outline: 2px solid #F5B800;
+    outline-offset: 2px;
+  }
+}
+
+/* ── Range slider cross-browser styling ──────────────────── */
+input[type='range'] {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+input[type='range']:disabled { opacity: 0.45; cursor: default; }
+
+input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 9999px;
+  background: white;
+  border: 2.5px solid currentColor;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.18);
+  cursor: grab;
+  transition: transform 0.12s, box-shadow 0.12s;
+}
+
+input[type='range']::-webkit-slider-thumb:active { cursor: grabbing; transform: scale(1.15); }
+input[type='range']::-moz-range-thumb {
+  width: 20px; height: 20px;
+  border-radius: 9999px;
+  background: white;
+  border: 2.5px solid currentColor;
+  cursor: grab;
+}
+
+/* ── OTP digit boxes ─────────────────────────────────────── */
+.otp-box {
+  @apply w-11 h-12 text-center text-xl font-bold rounded-xl border-2 outline-none
+         focus:border-meruGold transition-colors bg-white text-neutralDark;
+}
+
+/* ── Scrollbar ───────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 4px; }
+::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+/* ── PWA safe area ───────────────────────────────────────── */
+@supports (padding: env(safe-area-inset-bottom)) {
+  .pb-safe { padding-bottom: env(safe-area-inset-bottom); }
+  .pt-safe { padding-top:    env(safe-area-inset-top); }
+}
+
+/* ── Print styles ────────────────────────────────────────── */
+@media print {
+  header, footer, nav { display: none !important; }
+  body { background: white; }
+  .no-print { display: none !important; }
+}

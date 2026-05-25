@@ -1,0 +1,182 @@
+╔══════════════════════════════════════════════════════════════════╗
+║          BaiteConnect — Complete Setup & Deployment Guide        ║
+║               baiteconnect.meru.go.ke  |  v2.0                  ║
+╚══════════════════════════════════════════════════════════════════╝
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 1: PREREQUISITES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. Node.js 18+       → https://nodejs.org
+2. Neon account      → https://neon.tech  (free tier works)
+3. Africa's Talking  → https://africastalking.com  (sandbox for dev)
+4. Vercel account    → https://vercel.com  (free tier works)
+5. Cloudflare R2     → https://cloudflare.com  (optional, for file uploads)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 2: NEON DATABASE SETUP
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. Go to neon.tech → Create a project named "baiteconnect"
+2. Enable PostGIS extension:
+   → In the SQL editor, run: CREATE EXTENSION postgis;
+3. From the Connection Details panel, copy:
+   → Connection string (pooled)  → DATABASE_URL in .env.local
+   → Connection string (direct)  → DIRECT_URL in .env.local
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 3: AFRICA'S TALKING SETUP
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Development (sandbox):
+  AFRICAS_TALKING_USERNAME=sandbox
+  AFRICAS_TALKING_API_KEY=atsk_your_sandbox_key_here
+  AFRICAS_TALKING_SMS_SENDER_ID=BAITECONN
+
+Production:
+  → Register a sender ID "BAITECONN" with Africa's Talking
+  → Register USSD code *384# and set callback to:
+     https://baiteconnect.meru.go.ke/api/ussd
+  → Update username to your production AT username
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 4: LOCAL DEVELOPMENT SETUP
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Step 1: Install dependencies
+  npm install
+
+Step 2: Configure environment
+  cp .env.example .env.local
+  # Edit .env.local with:
+  #   DATABASE_URL="postgresql://..."
+  #   DIRECT_URL="postgresql://..."
+  #   JWT_SECRET="$(openssl rand -hex 32)"
+  #   AFRICAS_TALKING_USERNAME="sandbox"
+  #   AFRICAS_TALKING_API_KEY="your_at_key"
+
+Step 3: Push schema to database
+  npx prisma db push
+
+Step 4: Run PostGIS migration
+  # If psql is installed locally:
+  psql "$DIRECT_URL" -f prisma/migrations/001_add_postgis_ward_boundaries.sql
+
+  # Alternatively, paste the SQL directly into Neon's SQL editor
+
+Step 5: Seed data (45 wards, projects, sub-locations)
+  npm run db:seed
+
+Step 6: Seed admin users
+  npx tsx scripts/seed-admin-users.ts
+
+  IMPORTANT: Before running this, edit scripts/seed-admin-users.ts
+  and replace the placeholder phone numbers with real numbers.
+
+Step 7: Start development server
+  npm run dev
+  → http://localhost:3000          (public portal)
+  → http://localhost:3000/admin    (redirects to login)
+  → http://localhost:3000/admin/login  (admin login)
+  → http://localhost:3000/api/health   (health check)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 5: ADMIN LOGIN GUIDE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+BaiteConnect uses PHONE OTP ONLY — no passwords.
+
+How to log in:
+  1. Go to baiteconnect.meru.go.ke/admin/login
+  2. Enter your registered Kenyan phone number (+254...)
+  3. Receive a 6-digit SMS code (valid 10 minutes)
+  4. Enter the code → session cookie set → dashboard loads
+
+In development (sandbox mode):
+  - The OTP is shown on screen (dev mode only)
+  - SMS is still sent if Africa's Talking sandbox is configured
+
+Role levels:
+  GOVERNOR_EXEC  Full executive dashboard + read-only all sections
+  COUNTY_ADMIN   Full read + write access to all admin sections
+  MCA            MCA proposals + executive briefing only
+
+To add a new admin user:
+  1. Edit scripts/seed-admin-users.ts → add entry with real phone
+  2. Run: npx tsx scripts/seed-admin-users.ts
+  OR
+  1. Log in as COUNTY_ADMIN → /admin/users
+  2. Search for user's phone number → ✏️ Role → assign role
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 6: PRODUCTION DEPLOYMENT TO VERCEL
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Step 1: Install Vercel CLI
+  npm install -g vercel
+
+Step 2: Deploy
+  vercel --prod
+
+Step 3: Set environment variables in Vercel Dashboard
+  → Settings → Environment Variables
+  Copy all values from .env.local
+
+Step 4: Add custom domain
+  → Settings → Domains → Add baiteconnect.meru.go.ke
+  → Set DNS CNAME: baiteconnect → cname.vercel-dns.com
+  → Vercel auto-provisions Let's Encrypt SSL (free)
+
+Step 5: Run PostGIS migration on production database
+  psql "$DIRECT_URL" -f prisma/migrations/001_add_postgis_ward_boundaries.sql
+
+Step 6: Seed production database
+  # Set NODE_ENV=production and run seeds via Vercel CLI:
+  vercel env pull .env.production.local
+  DATABASE_URL=$(grep DATABASE_URL .env.production.local | cut -d'"' -f2)
+  npx tsx prisma/seed.ts
+  npx tsx scripts/seed-admin-users.ts  # AFTER updating phone numbers!
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 7: ZERO-RATED DATA (SAFARICOM PARTNERSHIP)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+To make BaiteConnect free for all Meru County residents:
+
+1. Contact Safaricom Enterprise:
+   → enterprise.safaricom.co.ke
+   → Request zero-rating for domain: baiteconnect.meru.go.ke
+   → Category: Government / Civic
+
+2. Contact Airtel Africa:
+   → Similar process for Airtel zero-rating
+
+3. USSD (*384#) is already zero-rated by default on all networks.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 8: USEFUL COMMANDS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+npm run dev              Start development server
+npm run build            Build for production (runs prisma generate)
+npm run db:push          Push Prisma schema to database
+npm run db:seed          Seed 45 wards, projects, sub-locations, MCA proposals
+npm run db:studio        Open Prisma Studio (database browser)
+npm run seed:admins      Seed admin user accounts
+npm run db:reset         Reset DB and re-seed (DESTRUCTIVE)
+npm run type-check       TypeScript type checking
+
+Health check:
+  curl https://baiteconnect.meru.go.ke/api/health
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 9: SUPPORT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+County Government of Meru
+Department of Finance, Economic Planning & ICT
+Email: budget.finance@meru.go.ke
+Portal: baiteconnect.meru.go.ke
+USSD:  *384#
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
