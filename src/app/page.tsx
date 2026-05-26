@@ -41,7 +41,7 @@ export default async function HomePage() {
       <div className="bg-meru-header rounded-2xl sm:rounded-3xl px-6 py-10 sm:px-12 sm:py-14 text-white relative overflow-hidden">
         <div className="absolute -right-16 -top-16 w-64 h-64 bg-white/5 rounded-full pointer-events-none" />
         <div className="absolute right-8 top-1/2 -translate-y-1/2 w-32 h-32 opacity-10 pointer-events-none hidden lg:block">
-          <Image src="/meru-logo.png" alt="" width={128} height={128} className="object-contain" />
+          <Image src="/meru-logo.jpeg" alt="" width={128} height={128} className="object-contain" />
         </div>
 
         <div className="relative max-w-2xl">
@@ -94,7 +94,7 @@ export default async function HomePage() {
           <Card className="p-5 sm:p-6">
             <div className="flex items-start gap-4">
               <div className="w-12 h-12 bg-white rounded-full overflow-hidden shadow border border-gray-100 shrink-0 flex items-center justify-center">
-                <Image src="/meru-logo.png" alt="Meru County" width={44} height={44} className="object-contain" />
+                <Image src="/meru-logo.jpeg" alt="Meru County" width={44} height={44} className="object-contain" />
               </div>
               <div>
                 <h2 className="text-lg font-bold text-neutralDark mb-1">About BaiteConnect</h2>

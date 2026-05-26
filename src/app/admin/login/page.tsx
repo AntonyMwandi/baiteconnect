@@ -163,7 +163,7 @@ export default function AdminLoginPage() {
             <div className="relative w-24 h-24 mx-auto mb-4">
               <div className="w-24 h-24 rounded-full bg-white shadow-2xl flex items-center justify-center overflow-hidden">
                 <Image
-                  src="/meru-logo.png"
+                  src="/meru-logo.jpeg"
                   alt="County Government of Meru"
                   width={88}
                   height={88}

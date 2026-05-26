@@ -16,7 +16,7 @@ export default function AboutPage() {
       {/* Hero */}
       <div className="flex flex-col sm:flex-row items-center gap-6 bg-meru-header rounded-2xl p-8 text-white">
         <div className="w-24 h-24 bg-white rounded-full overflow-hidden shadow-2xl flex items-center justify-center shrink-0">
-          <Image src="/meru-logo.png" alt="County Government of Meru" width={88} height={88} className="object-contain" />
+          <Image src="/meru-logo.jpeg" alt="County Government of Meru" width={88} height={88} className="object-contain" />
         </div>
         <div>
           <p className="text-white/60 text-sm uppercase tracking-widest mb-2">About</p>

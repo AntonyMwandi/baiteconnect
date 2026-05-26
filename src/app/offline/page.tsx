@@ -8,7 +8,7 @@ export default function OfflinePage() {
   return (
     <div className="min-h-[80vh] flex flex-col items-center justify-center px-4 text-center">
       <div className="w-20 h-20 bg-white rounded-full shadow-card overflow-hidden mx-auto mb-6">
-        <Image src="/meru-logo.png" alt="Meru County" width={80} height={80} className="object-contain" />
+        <Image src="/meru-logo.jpeg" alt="Meru County" width={80} height={80} className="object-contain" />
       </div>
 
       <div className="text-5xl mb-4">📶</div>

@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   description: 'Submit budget memoranda, track county projects, and make your voice count across all 45 wards of Meru County, Kenya.',
   keywords:    ['Meru County','public participation','budget','MTEF','Kenya','baiteconnect'],
   manifest:    '/manifest.json',
-  icons: { icon: '/meru-logo.png', apple: '/meru-logo.png' },
+  icons: { icon: '/meru-logo.jpeg', apple: '/meru-logo.jpeg' },
   openGraph: {
     title:      'BaiteConnect — Meru County',
     description:'Digital Public Participation & Ward Budgeting Portal',

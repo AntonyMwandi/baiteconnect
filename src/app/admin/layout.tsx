@@ -57,7 +57,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     <div className="min-h-screen bg-meruGreen flex items-center justify-center">
       <div className="text-center">
         <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4 overflow-hidden">
-          <Image src="/meru-logo.png" alt="Meru" width={56} height={56} className="object-contain" />
+          <Image src="/meru-logo.jpeg" alt="Meru" width={56} height={56} className="object-contain" />
         </div>
         <div className="w-6 h-6 border-2 border-white/30 border-t-white rounded-full animate-spin mx-auto" />
         <p className="text-white/60 text-sm mt-3">Verifying session…</p>
@@ -75,7 +75,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       <div className="px-4 py-4 border-b border-white/10">
         <div className="flex items-center gap-2.5 mb-3">
           <div className="w-9 h-9 bg-white rounded-full overflow-hidden flex items-center justify-center shrink-0">
-            <Image src="/meru-logo.png" alt="Meru County" width={34} height={34} className="object-contain" />
+            <Image src="/meru-logo.jpeg" alt="Meru County" width={34} height={34} className="object-contain" />
           </div>
           <div>
             <p className="text-white font-bold text-sm leading-none">BaiteConnect</p>
@@ -152,7 +152,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             </button>
             <div className="flex items-center gap-2">
               <div className="w-7 h-7 bg-white rounded-full overflow-hidden border border-gray-200">
-                <Image src="/meru-logo.png" alt="Meru" width={28} height={28} className="object-contain" />
+                <Image src="/meru-logo.jpeg" alt="Meru" width={28} height={28} className="object-contain" />
               </div>
               <span className="text-sm font-semibold text-neutralDark">Admin Console</span>
             </div>

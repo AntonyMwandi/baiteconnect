@@ -50,7 +50,7 @@ export default function Header() {
         {/* Brand */}
         <Link href="/" className="flex items-center gap-2.5 shrink-0 group">
           <div className="w-9 h-9 bg-white rounded-full overflow-hidden shadow-md group-hover:scale-105 transition-transform shrink-0">
-            <Image src="/meru-logo.png" alt="Meru County" width={36} height={36} className="object-contain w-full h-full" />
+            <Image src="/meru-logo.jpeg" alt="Meru County" width={36} height={36} className="object-contain w-full h-full" />
           </div>
           <div className="leading-tight">
             <div className="font-bold text-base text-white leading-none">BaiteConnect</div>

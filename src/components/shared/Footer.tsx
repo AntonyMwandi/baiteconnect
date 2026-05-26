@@ -49,7 +49,7 @@ export default function Footer() {
         <div className="sm:col-span-2 lg:col-span-1">
           <div className="flex items-center gap-3 mb-4">
             <div className="w-12 h-12 bg-white rounded-full overflow-hidden shadow-lg shrink-0 flex items-center justify-center">
-              <Image src="/meru-logo.png" alt="County Government of Meru" width={44} height={44} className="object-contain" />
+              <Image src="/meru-logo.jpeg" alt="County Government of Meru" width={44} height={44}/>
             </div>
             <div>
               <p className="font-bold text-lg leading-none">BaiteConnect</p>

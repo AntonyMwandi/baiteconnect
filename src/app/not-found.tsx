@@ -6,7 +6,7 @@ export default function NotFound() {
   return (
     <div className="min-h-[70vh] flex flex-col items-center justify-center px-4 py-16 text-center">
       <div className="w-20 h-20 bg-white rounded-full shadow-card overflow-hidden mx-auto mb-6">
-        <Image src="/meru-logo.png" alt="Meru County" width={80} height={80} className="object-contain" />
+        <Image src="/meru-logo.jpeg" alt="Meru County" width={80} height={80} className="object-contain" />
       </div>
 
       <h1 className="text-6xl font-bold text-meruGreen mb-3">404</h1>
